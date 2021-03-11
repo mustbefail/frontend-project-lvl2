@@ -4,7 +4,7 @@ install-deps:
 	npm ci
 
 gendiff:
-	node gendiff.js
+	node bin/gendiffCLI.js
 test:
 	npm test
 
