@@ -4,7 +4,11 @@ Command line utility for calculating and displaying changes to configuration fil
 
 [![asciicast](https://asciinema.org/a/kCzVza4FSYwOtq42sIoK2SWUb.svg)](https://asciinema.org/a/kCzVza4FSYwOtq42sIoK2SWUb)
 
-### Hexlet tests and linter status: [![Actions Status](https://github.com/mustbefail/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/mustbefail/frontend-project-lvl2/actions)
+Hexlet tests and linter status: [![Actions Status](https://github.com/mustbefail/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/mustbefail/frontend-project-lvl2/actions)
+
+Codeclime test coverage and maintainability 
+Maintainability: [![Maintainability](https://api.codeclimate.com/v1/badges/deaa459435975dd4e609/maintainability)](https://codeclimate.com/github/mustbefail/frontend-project-lvl2/maintainability)
+Test coverage: [![Test Coverage](https://api.codeclimate.com/v1/badges/deaa459435975dd4e609/test_coverage)](https://codeclimate.com/github/mustbefail/frontend-project-lvl2/test_coverage)
 
 ## Install
 
