@@ -9,6 +9,9 @@
   "scripts": {
     "test": "npx jest"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mustbefail/frontend-project-lvl2.git"
