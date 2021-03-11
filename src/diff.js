@@ -17,27 +17,22 @@ function difference(filepath1, filepath2) {
   const obj2 = JSON.parse(file2);
   const uniqKeys = _.union(_.keys(obj1), _.keys(obj2));
   const sortedKeys = _.sortBy(uniqKeys);
+
   const diffs = sortedKeys.reduce((res, key) => {
-    let diff = [];
     if (_.has(obj1, key) && _.has(obj2, key)) {
       if (obj1[key] === obj2[key]) {
-        diff = [' ', `${key}:`, `${obj1[key]}`];
-        res.push(diff);
-      } else {
-        diff = ['-', `${key}:`, `${obj1[key]}`];
-        res.push(diff);
-        diff = ['+', `${key}:`, `${obj2[key]}`];
-        res.push(diff);
+        return [...res, [' ', `${key}:`, `${obj1[key]}`]];
       }
-    } else if (!(_.has(obj1, key)) && (_.has(obj2, key))) {
-      diff = ['+', `${key}:`, `${obj2[key]}`];
-      res.push(diff);
-    } else {
-      diff = ['-', `${key}:`, `${obj1[key]}`];
-      res.push(diff);
+      return [
+        ...res,
+        ['-', `${key}:`, `${obj1[key]}`],
+        ['+', `${key}:`, `${obj2[key]}`],
+      ];
+    } if (!(_.has(obj1, key)) && (_.has(obj2, key))) {
+      return [...res, ['+', `${key}:`, `${obj2[key]}`]];
     }
-    return res;
+    return [...res, ['-', `${key}:`, `${obj1[key]}`]];
   }, []);
-  return `{\n${diffs.map((el) => `  ${el.join(' ')}`).join('\n')}\n}`;
+  return `{\n${diffs.flatMap((el) => `  ${el.join(' ')}`).join('\n')}\n}`;
 }
 export default difference;
