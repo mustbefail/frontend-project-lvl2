@@ -16,3 +16,5 @@ lint:
 
 publish:
 	npm publish --dry-run
+
+.PHONY: test
