@@ -1,38 +1,36 @@
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
-import process from 'process';
+import parsers from './parsers.js';
 
-function readFile(filepath) {
-  const currentDir = process.cwd();
-  const pathToFile = path.resolve(currentDir, filepath);
+const parse = (filepath) => {
+  const ext = path.extname(filepath);
+  const data = fs.readFileSync(filepath);
+  const parser = parsers(ext);
 
-  return fs.readFileSync(pathToFile, 'utf8');
-}
+  return parser(data);
+};
 
-function difference(filepath1, filepath2) {
-  const file1 = readFile(filepath1);
-  const file2 = readFile(filepath2);
-  const obj1 = JSON.parse(file1);
-  const obj2 = JSON.parse(file2);
-  const uniqKeys = _.union(_.keys(obj1), _.keys(obj2));
+export default (filepath1, filepath2) => {
+  const data1 = parse(filepath1);
+  const data2 = parse(filepath2);
+  const uniqKeys = _.union(_.keys(data1), _.keys(data2));
   const sortedKeys = _.sortBy(uniqKeys);
 
   const diffs = sortedKeys.reduce((res, key) => {
-    if (_.has(obj1, key) && _.has(obj2, key)) {
-      if (obj1[key] === obj2[key]) {
-        return [...res, [' ', `${key}:`, `${obj1[key]}`]];
+    if (_.has(data1, key) && _.has(data2, key)) {
+      if (data1[key] === data2[key]) {
+        return [...res, [' ', `${key}:`, `${data1[key]}`]];
       }
       return [
         ...res,
-        ['-', `${key}:`, `${obj1[key]}`],
-        ['+', `${key}:`, `${obj2[key]}`],
+        ['-', `${key}:`, `${data1[key]}`],
+        ['+', `${key}:`, `${data2[key]}`],
       ];
-    } if (!(_.has(obj1, key)) && (_.has(obj2, key))) {
-      return [...res, ['+', `${key}:`, `${obj2[key]}`]];
+    } if (!(_.has(data1, key)) && (_.has(data2, key))) {
+      return [...res, ['+', `${key}:`, `${data2[key]}`]];
     }
-    return [...res, ['-', `${key}:`, `${obj1[key]}`]];
+    return [...res, ['-', `${key}:`, `${data1[key]}`]];
   }, []);
   return `{\n${diffs.flatMap((el) => `  ${el.join(' ')}`).join('\n')}\n}`;
-}
-export default difference;
+};

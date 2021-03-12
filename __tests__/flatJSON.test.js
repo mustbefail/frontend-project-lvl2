@@ -17,9 +17,14 @@ const expectOutput = `{
   + verbose: true
 }`;
 
-const file1 = getFixturePath('file1.json');
-const file2 = getFixturePath('file2.json');
+test('json difference', () => {
+  const file1 = getFixturePath('file1.json');
+  const file2 = getFixturePath('file2.json');
+  expect(diff(file1, file2)).toBe(expectOutput);
+});
 
-test('config files difference', () => {
+test('yaml difference', () => {
+  const file1 = getFixturePath('file1.yml');
+  const file2 = getFixturePath('file2.yml');
   expect(diff(file1, file2)).toBe(expectOutput);
 });
