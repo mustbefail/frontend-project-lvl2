@@ -3,11 +3,11 @@ import _ from 'lodash';
 const nodeType = [
   {
     check: (key, obj1) => !_.has(obj1, key),
-    build: (key, obj2) => ({ key, type: 'added', value: obj2[key] }),
+    build: (key, _obj1, obj2) => ({ key, type: 'added', value: obj2[key] }),
   },
   {
-    check: (key, obj2) => !_.has(obj2, key),
-    build: (key, obj1) => ({ key, type: 'deleted', value: obj1[key] }),
+    check: (key, _obj1, obj2) => !_.has(obj2, key),
+    build: (key, obj1, _obj2) => ({ key, type: 'deleted', value: obj1[key] }),
   },
   {
     check: (key, obj1, obj2) =>
@@ -20,7 +20,7 @@ const nodeType = [
   },
   {
     check: (key, obj1, obj2) => obj1[key] === obj2[key],
-    build: (key, obj1) => ({
+    build: (key, obj1, _obj2) => ({
       key,
       type: 'unchanged',
       value: obj1[key],
